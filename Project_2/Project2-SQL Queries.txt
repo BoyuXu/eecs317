@@ -1,0 +1,44 @@
+1.
+SELECT count(Booking_Id) AS Number_of_Rooms
+FROM Booking
+WHERE ((Booking.Start_Date)<=#11/12/2014# And (Booking.End_Date)>=#11/12/2014#)
+
+
+2.
+SELECT Guest.First_Name, Guest.Last_Name
+FROM Guest, Booking
+WHERE (((Guest.Booking_ID)=Booking.Booking_ID) And ((Booking.Payment_due)>0));
+
+3.
+SELECT Room.Room_Number, Current_PriceFROM Room, BookingWHERE (Booking.Start_Date)<=#11/12/2014# and (Booking.End_Date)>=#11/12/2014# and Booking.Room_Number = Room.Room_Number and Current_Price >= all (SELECT Current_PriceFrom Room, BookingWHERE (Booking.Start_Date)<=#11/12/2014# and (Booking.End_Date)>=#11/12/2014# and Booking.Room_Number = Room.Room_Number)
+
+4'.
+SELECT YEAR(Booking.Start_Date), max(Room.Current_Price)
+FROM Booking, Room
+WHERE ((Booking.Start_Date)>#1/1/2012# And (Booking.Start_Date)<#12/31/2013#) and Booking.Room_Number = Room.Room_Number
+group by YEAR(Booking.Start_Date);
+
+4.
+SELECT Customer.First_Name, Customer.Last_Name
+FROM Customer, Guest
+WHERE (((Customer.First_Name)=Guest.First_Name) And ((Customer.Last_Name)=Guest.Last_Name));
+
+5.
+SELECT Avg(Payment_amount) AS Avg_Payment
+FROM Payment
+WHERE (((Payment.Payment_Date)>#1/1/2012# And (Payment.Payment_Date)<#12/31/2013#));
+
+6.
+SELECT Year(Payment_Date) AS Year, Month(Payment_Date) AS Month, Avg(Payment.Payment_Amount) AS AvgOfPayment_Amount
+FROM Payment
+WHERE (((Payment.Payment_Date)>#1/1/2012# And (Payment.Payment_Date)<#12/31/2013#))
+GROUP BY Year(Payment_Date), Month(Payment_Date);
+
+7.
+SELECT Year(Date_Of_Booking) AS Year, Month(Date_Of_Booking) AS Month, Count(Customer_ID) AS Number_Customers
+FROM Customer_Booking_List
+WHERE ((Date_Of_Booking)>#1/1/2012# And (Date_Of_Booking)<#12/31/2014#)
+GROUP BY Year(Date_Of_Booking), Month(Date_Of_Booking);
+
+
+

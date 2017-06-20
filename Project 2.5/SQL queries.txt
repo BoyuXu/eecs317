@@ -1,0 +1,42 @@
+Team members:
+Boyu Xu
+Daowei Li
+
+
+1.
+select name, salary
+from "Employee"
+
+
+2.
+select avg("salary")
+from "ChargeNurse", "Employee"
+where "Employee"."emplID" = "ChargeNurse"."empID"
+
+
+3.
+select count("patientID")
+from "InPatient"
+where "InPatient"."wardID" = 2 
+
+(There is another solution)
+select count("patientID")
+from "Ward", "InPatient", "Bed"
+where "Ward"."wardID" = "Bed"."wardID" and "Bed"."bedNumber" = "InPatient"."bedNumber" and "Ward"."wardID" = 2
+
+
+4.
+select avg("salary")
+from "Employee"
+where "Employee"."emplID" in (
+select "Nurse"."emplID"
+from "Patient", "InPatient", "Nurse"
+where "Patient"."name" = 'Billy Bob' and "InPatient"."patientID" = "Patient"."patientID" and "InPatient"."wardID" = "Nurse"."wardID" 
+union
+select "Ward"."ChargeNurse"
+from "Patient", "InPatient", "Ward"	where "Patient"."name" = 'Billy Bob' and "InPatient"."patientID" = "Patient"."patientID" and "InPatient"."wardID" = "Ward"."wardID" 
+union
+select "Consultant"."consultantID"
+from "Patient", "InPatient", "Consultant"
+where "Patient"."name" = 'Billy Bob' and "InPatient"."patientID" = "Patient"."patientID" and "InPatient"."wardID" = "Consultant"."wardID" 
+)
